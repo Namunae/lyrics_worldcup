@@ -126,9 +126,9 @@ function startFinalMatch() {
 
 // 결승전 결과 처리
 function selectFinalWinner(selected) {
-    finalResults.unshift(selected);  // 1등 추가
     const secondPlace = currentLyrics.find(lyric => lyric !== selected);  // 남은 가사 2등으로 결정
     finalResults.unshift(secondPlace);  // 2등 추가
+    finalResults.unshift(selected);  // 1등 추가
     showFinalResults();  // 최종 결과 표시
 }
 
