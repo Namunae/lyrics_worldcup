@@ -18,13 +18,10 @@ const lyrics = [
     "가사 121", "가사 122", "가사 123", "가사 124", "가사 125", "가사 126", "가사 127", "가사 128"
 ];
 
-
 let round = 128;  // 현재 라운드 (128강 시작)
 let currentLyrics = [];
 let selectedLyrics = [];
 let finalResults = [];
-let thirdPlaceCandidates = [];  // 4강에서 탈락한 가사 저장
-let finalCandidates = [];  // 결승에 진출한 두 곡 저장
 
 // 가사 랜덤하게 섞기
 function shuffle(array) {
@@ -95,49 +92,19 @@ function checkNextRound() {
         } else if (round === 8) {
             round = 4;
         } else if (round === 4) {
-            thirdPlaceCandidates = [...selectedLyrics];  // 4강에서 탈락한 가사 저장
-            finalCandidates = [...currentLyrics];  // 결승에 진출한 가사 저장
-            startThirdPlaceMatch();  // 3, 4위전 시작
-            return;  // 3, 4위전으로 이동
+            finalResults.push(selectedLyrics[1]);  // 3등
+            finalResults.push(selectedLyrics[0]);  //
+            finalResults.push(selectedLyrics[0]);  // 4등
+            round = 2;  // 결승
         } else if (round === 2) {
             finalResults.push(selectedLyrics[0]);  // 1등
             finalResults.push(selectedLyrics[1]);  // 2등
-            showFinalResults();  // 최종 결과 표시
-            return;  // 최종 결과로 이동
+            showFinalResults();  // 결승이 끝난 후 최종 결과 표시
+            return;  // 결승이 끝나면 더 이상 라운드를 진행하지 않음
         }
 
-        startRound();  // 다음 라운드 시작
+        startRound();  // 새로운 라운드 시작
     }
-}
-
-// 3, 4위 결정전 시작
-function startThirdPlaceMatch() {
-    document.getElementById('round-info').innerText = "3, 4위 결정전";
-    currentLyrics = [...thirdPlaceCandidates];  // 4강에서 탈락한 두 개의 가사를 불러옴
-    updateLyrics();  // 3, 4위 결정전 진행
-}
-
-// 3, 4위 결정
-function selectThirdPlace(selected) {
-    finalResults.push(selected);  // 3등 추가
-    const fourthPlace = currentLyrics.find(lyric => lyric !== selected);  // 남은 가사 4등으로 결정
-    finalResults.push(fourthPlace);  // 4등 추가
-    startFinalMatch();  // 3, 4위전 후 결승전 시작
-}
-
-// 결승전 시작
-function startFinalMatch() {
-    document.getElementById('round-info').innerText = "결승전";
-    currentLyrics = [...finalCandidates];  // 결승에 진출한 두 개의 가사를 불러옴
-    updateLyrics();  // 결승전 진행
-}
-
-// 결승전 결과 처리
-function selectFinalWinner(selected) {
-    finalResults.unshift(selected);  // 1등 추가
-    const secondPlace = currentLyrics.find(lyric => lyric !== selected);  // 남은 가사 2등으로 결정
-    finalResults.unshift(secondPlace);  // 2등 추가
-    showFinalResults();  // 최종 결과 표시
 }
 
 // 최종 결과 표시
