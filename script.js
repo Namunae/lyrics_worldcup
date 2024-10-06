@@ -23,6 +23,7 @@ let currentLyrics = [];
 let selectedLyrics = [];
 let thirdPlaceContest = [];  // 3, 4위 결정전에서 사용할 배열
 let finalResults = [];  // 최종 순위를 저장할 배열
+let losers = [];  // 4강에서 떨어진 가사를 저장할 배열 (3, 4위전용)
 
 // 가사 랜덤하게 섞기
 function shuffle(array) {
@@ -70,6 +71,7 @@ document.getElementById('lyric2').addEventListener('click', function () {
 // 가사 선택 처리
 function selectLyric(choice) {
     selectedLyrics.push(currentLyrics[choice]);  // 선택된 가사만 저장
+    losers.push(currentLyrics[1 - choice]);  // 떨어진 가사 저장
     currentLyrics.splice(0, 2);  // 선택한 두 가사를 배열에서 제거
 
     if (currentLyrics.length >= 2) {
@@ -94,7 +96,7 @@ function checkNextRound() {
             round = 4;
         } else if (round === 4) {
             // 4강에서 결승과 3, 4위 결정전으로 나누기
-            thirdPlaceContest = [...selectedLyrics.slice(2)];  // 결승에 진출하지 못한 두 가사
+            thirdPlaceContest = losers.slice(0, 2);  // 3, 4위 결정전
             selectedLyrics = selectedLyrics.slice(0, 2);  // 결승에 진출한 두 가사
             round = '3rdPlace';  // 3, 4위 결정전
             startThirdPlaceMatch();  // 3, 4위 결정전 시작
