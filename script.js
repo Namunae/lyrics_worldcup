@@ -10,7 +10,6 @@ let thirdPlaceContest = [];  // 3, 4위 결정전에서 사용할 배열
 let finalResults = [];  // 최종 순위를 저장할 배열
 let finalContest = [];  // 결승전에서 사용할 배열 (1, 2위 결정)
 let semiFinalists = [];  // 4강에 진출한 가사를 저장할 배열
-let isProcessing = false;  // 중복 처리 방지 플래그
 
 // 가사 랜덤하게 섞기
 function shuffle(array) {
@@ -20,9 +19,6 @@ function shuffle(array) {
     }
     return array;
 }
-
-// 모바일 환경 감지
-const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 // 라운드 시작
 function startRound() {
@@ -46,20 +42,16 @@ function startRound() {
 // 가사 업데이트 (다음 두 개의 가사를 보여줌)
 function updateLyrics() {
     if (currentLyrics.length >= 2) {
+        // 기존의 이벤트 리스너 제거 (중복 방지)
         document.getElementById('lyric1').removeEventListener('click', handleClick1);
         document.getElementById('lyric2').removeEventListener('click', handleClick2);
-        
-        // 모바일인지 확인 후, 각각에 맞는 이벤트만 추가
-        if (isMobile) {
-            document.getElementById('lyric1').addEventListener('touchend', handleClick1);
-            document.getElementById('lyric2').addEventListener('touchend', handleClick2);
-        } else {
-            document.getElementById('lyric1').addEventListener('click', handleClick1);
-            document.getElementById('lyric2').addEventListener('click', handleClick2);
-        }
 
         document.getElementById('lyric1').innerText = currentLyrics[0];
         document.getElementById('lyric2').innerText = currentLyrics[1];
+
+        // 새로운 이벤트 리스너 추가
+        document.getElementById('lyric1').addEventListener('click', handleClick1);
+        document.getElementById('lyric2').addEventListener('click', handleClick2);
     } else {
         checkNextRound();  // 남은 가사가 없으면 라운드 종료 처리
     }
@@ -67,24 +59,17 @@ function updateLyrics() {
 
 // 가사 선택 시 동작 (중복 방지를 위해 따로 함수로 분리)
 function handleClick1() {
-    if (!isProcessing) {
-        isProcessing = true;  // 처리 중 플래그 설정
-        selectLyric(0);
-        isProcessing = false;  // 처리 완료 후 플래그 해제
-    }
+    selectLyric(0);
 }
 
 function handleClick2() {
-    if (!isProcessing) {
-        isProcessing = true;  // 처리 중 플래그 설정
-        selectLyric(1);
-        isProcessing = false;  // 처리 완료 후 플래그 해제
-    }
+    selectLyric(1);
 }
 
 // 가사 선택 처리
 function selectLyric(choice) {
     if (round === 4) {
+        // 4강에서 승자는 결승전으로, 패자는 3-4위전으로 보냄
         finalContest.push(currentLyrics[choice]);  // 결승 진출자 저장
         thirdPlaceContest.push(currentLyrics[1 - choice]);  // 3-4위 전용 배열에 저장
     } else if (round === 2) {
