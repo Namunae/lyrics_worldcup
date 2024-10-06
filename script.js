@@ -21,6 +21,9 @@ function shuffle(array) {
     return array;
 }
 
+// 모바일 환경 감지
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
 // 라운드 시작
 function startRound() {
     if (round === 128) {
@@ -51,11 +54,14 @@ function updateLyrics() {
         document.getElementById('lyric1').innerText = currentLyrics[0];
         document.getElementById('lyric2').innerText = currentLyrics[1];
 
-        // 새로운 이벤트 리스너 추가 (클릭과 터치 이벤트 둘 다 처리)
-        document.getElementById('lyric1').addEventListener('click', handleClick1);
-        document.getElementById('lyric2').addEventListener('click', handleClick2);
-        document.getElementById('lyric1').addEventListener('touchend', handleClick1);
-        document.getElementById('lyric2').addEventListener('touchend', handleClick2);
+        // 모바일과 데스크탑을 구분하여 이벤트 등록
+        if (isMobile) {
+            document.getElementById('lyric1').addEventListener('touchend', handleClick1);
+            document.getElementById('lyric2').addEventListener('touchend', handleClick2);
+        } else {
+            document.getElementById('lyric1').addEventListener('click', handleClick1);
+            document.getElementById('lyric2').addEventListener('click', handleClick2);
+        }
     } else {
         checkNextRound();  // 남은 가사가 없으면 라운드 종료 처리
     }
@@ -157,3 +163,4 @@ function showFinalResults() {
 
 // 게임 시작
 startRound();
+
