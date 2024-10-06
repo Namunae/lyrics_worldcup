@@ -79,6 +79,12 @@ function selectLyric(choice) {
         // 4강에서 승자는 결승전으로, 패자는 3-4위전으로 보냄
         finalContest.push(currentLyrics[choice]);  // 결승 진출자 저장
         thirdPlaceContest.push(currentLyrics[1 - choice]);  // 3-4위 전용 배열에 저장
+    } else if (round === 2) {
+        finalResults[0] = currentLyrics[choice];  // 1등 저장
+        finalResults[1] = currentLyrics[1 - choice];  // 2등 저장
+    } else if (round === '3rdPlace') {
+        finalResults[2] = currentLyrics[choice];  // 3등 저장
+        finalResults[3] = currentLyrics[1 - choice];  // 4등 저장
     } else {
         selectedLyrics.push(currentLyrics[choice]);  // 선택된 가사 저장
     }
@@ -112,16 +118,11 @@ function checkNextRound() {
             startThirdPlaceMatch();  // 3, 4위 결정전 시작
             return;
         } else if (round === '3rdPlace') {
-            // 3, 4위 결정전에서 결과 저장
-            finalResults[2] = thirdPlaceContest[0];  // 3등
-            finalResults[3] = thirdPlaceContest[1];  // 4등
+            // 3, 4위 결정전이 끝나면 결승전으로
             round = 2;  // 결승전 진행
             startRound();  // 결승전 시작
             return;
         } else if (round === 2) {
-            // 결승에서 1, 2등 결과 저장
-            finalResults[0] = finalContest[0];  // 1등
-            finalResults[1] = finalContest[1];  // 2등
             showFinalResults();  // 최종 결과 표시
             return;  // 결승이 끝나면 더 이상 라운드를 진행하지 않음
         }
