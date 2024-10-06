@@ -48,7 +48,7 @@ function startRound() {
     updateLyrics();
 }
 
-// 가사 업데이트
+// 가사 업데이트 (다음 쌍을 표시)
 function updateLyrics() {
     if (currentLyrics.length >= 2) {
         // 현재 비교할 두 개의 가사 표시
@@ -76,8 +76,12 @@ function selectLyric(selected) {
     console.log('선택된 가사:', selected);  // 로그로 선택된 가사 확인
     console.log('남은 가사:', currentLyrics);  // 로그로 남은 가사 확인
 
-    // 다음 가사 쌍을 업데이트
-    updateLyrics();
+    // 남은 가사 쌍이 있으면 다음으로 넘어가기
+    if (currentLyrics.length >= 2) {
+        updateLyrics();  // 남은 가사 쌍을 업데이트
+    } else {
+        checkNextRound();  // 남은 가사가 없으면 라운드 종료 체크
+    }
 }
 
 // 라운드가 끝났는지 확인하고, 다음 라운드로 이동
