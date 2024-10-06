@@ -21,8 +21,8 @@ const lyrics = [
 let round = 128;  // 현재 라운드 (128강 시작)
 let currentLyrics = [];
 let selectedLyrics = [];
-let finalResults = [];
 let thirdPlaceContest = [];  // 3,4위 결정전에서 사용할 배열
+let finalResults = [];  // 최종 순위를 저장할 배열
 
 // 가사 랜덤하게 섞기
 function shuffle(array) {
@@ -91,8 +91,8 @@ function checkNextRound() {
         } else if (round === 8) {
             round = 4;
         } else if (round === 4) {
-            thirdPlaceContest = [...selectedLyrics.slice(2)];  // 결승에 진출하지 못한 가사 저장
-            selectedLyrics = [...selectedLyrics.slice(0, 2)];  // 결승에 진출한 가사만 남김
+            thirdPlaceContest = selectedLyrics.slice(2);  // 결승에 진출하지 못한 가사 저장
+            selectedLyrics = selectedLyrics.slice(0, 2);  // 결승에 진출한 가사만 남김
             round = '3rdPlace';  // 3,4위 결정전 진행
             startThirdPlaceMatch();  // 3,4위 결정전 시작
             return;
