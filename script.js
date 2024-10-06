@@ -72,8 +72,10 @@ document.getElementById('lyric2').addEventListener('click', function () {
 // 가사 선택 처리
 function selectLyric(choice) {
     if (round === 4) {
-        // 4강에서 떨어진 두 가사를 thirdPlaceContest에 저장
-        thirdPlaceContest.push(currentLyrics[1 - choice]);  
+        // 4강에서 선택되지 않은 가사만 thirdPlaceContest에 저장
+        if (thirdPlaceContest.length < 2) {
+            thirdPlaceContest.push(currentLyrics[1 - choice]);  
+        }
     }
     selectedLyrics.push(currentLyrics[choice]);  // 선택된 가사만 저장
     currentLyrics.splice(0, 2);  // 선택한 두 가사를 배열에서 제거
