@@ -96,7 +96,7 @@ function checkNextRound() {
             round = 4;
         } else if (round === 4) {
             // 4강에서 결승과 3, 4위 결정전으로 나누기
-            thirdPlaceContest = losers.slice(0, 2);  // 3, 4위 결정전
+            thirdPlaceContest = [...losers];  // 3, 4위 결정전
             selectedLyrics = selectedLyrics.slice(0, 2);  // 결승에 진출한 두 가사
             round = '3rdPlace';  // 3, 4위 결정전
             startThirdPlaceMatch();  // 3, 4위 결정전 시작
