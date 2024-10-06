@@ -91,13 +91,14 @@ function checkNextRound() {
         } else if (round === 8) {
             round = 4;
         } else if (round === 4) {
-            thirdPlaceContest = [...selectedLyrics.slice(2)];  // 결승에 진출하지 못한 가사 저장
-            selectedLyrics = [...selectedLyrics.slice(0, 2)];  // 결승에 진출한 가사만 남김
-            round = '3rdPlace';  // 3,4위 결정전 진행
-            startThirdPlaceMatch();  // 3,4위 결정전 시작
+            // 4강에서 결승 진출자와 3, 4위 결정전으로 나눔
+            thirdPlaceContest = selectedLyrics.slice(2);  // 결승에 진출하지 못한 가사 저장 (3, 4위)
+            selectedLyrics = selectedLyrics.slice(0, 2);  // 결승에 진출한 가사만 남김
+            round = '3rdPlace';  // 3, 4위 결정전 진행
+            startThirdPlaceMatch();  // 3, 4위 결정전 시작
             return;
         } else if (round === '3rdPlace') {
-            finalResults.push(thirdPlaceContest[0]);  // 3등
+            finalResults.push(selectedLyrics[0]);  // 3등
             finalResults.push(thirdPlaceContest[1]);  // 4등
             round = 2;  // 결승전 진행
             startRound();  // 결승전 시작
@@ -113,11 +114,11 @@ function checkNextRound() {
     }
 }
 
-// 3,4위 결정전 시작
+// 3, 4위 결정전 시작
 function startThirdPlaceMatch() {
-    currentLyrics = [...thirdPlaceContest];  // 3,4위 가사 배열 초기화
+    currentLyrics = [...thirdPlaceContest];  // 3, 4위 가사 배열 초기화
     selectedLyrics = [];
-    document.getElementById('round-info').innerText = `3,4위 결정전`;
+    document.getElementById('round-info').innerText = `3, 4위 결정전`;
     updateLyrics();
 }
 
