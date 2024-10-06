@@ -1,27 +1,10 @@
 // 128개의 가사 배열 (가사 내용은 사용자가 수정 가능)
-const lyrics = [
-    "가사 1", "가사 2", "가사 3", "가사 4", "가사 5", "가사 6", "가사 7", "가사 8",
-    "가사 9", "가사 10", "가사 11", "가사 12", "가사 13", "가사 14", "가사 15", "가사 16",
-    "가사 17", "가사 18", "가사 19", "가사 20", "가사 21", "가사 22", "가사 23", "가사 24",
-    "가사 25", "가사 26", "가사 27", "가사 28", "가사 29", "가사 30", "가사 31", "가사 32",
-    "가사 33", "가사 34", "가사 35", "가사 36", "가사 37", "가사 38", "가사 39", "가사 40",
-    "가사 41", "가사 42", "가사 43", "가사 44", "가사 45", "가사 46", "가사 47", "가사 48",
-    "가사 49", "가사 50", "가사 51", "가사 52", "가사 53", "가사 54", "가사 55", "가사 56",
-    "가사 57", "가사 58", "가사 59", "가사 60", "가사 61", "가사 62", "가사 63", "가사 64",
-    "가사 65", "가사 66", "가사 67", "가사 68", "가사 69", "가사 70", "가사 71", "가사 72",
-    "가사 73", "가사 74", "가사 75", "가사 76", "가사 77", "가사 78", "가사 79", "가사 80",
-    "가사 81", "가사 82", "가사 83", "가사 84", "가사 85", "가사 86", "가사 87", "가사 88",
-    "가사 89", "가사 90", "가사 91", "가사 92", "가사 93", "가사 94", "가사 95", "가사 96",
-    "가사 97", "가사 98", "가사 99", "가사 100", "가사 101", "가사 102", "가사 103", "가사 104",
-    "가사 105", "가사 106", "가사 107", "가사 108", "가사 109", "가사 110", "가사 111", "가사 112",
-    "가사 113", "가사 114", "가사 115", "가사 116", "가사 117", "가사 118", "가사 119", "가사 120",
-    "가사 121", "가사 122", "가사 123", "가사 124", "가사 125", "가사 126", "가사 127", "가사 128"
-];
+const lyrics = Array.from({ length: 128 }, (_, i) => `가사 ${i + 1}`);
 
 let round = 128;  // 현재 라운드 (128강 시작)
 let currentLyrics = [];
 let selectedLyrics = [];
-let thirdPlaceContest = [];  // 3,4위 결정전에서 사용할 배열
+let thirdPlaceContest = [];  // 3, 4위 결정전에서 사용할 배열
 let finalResults = [];  // 최종 순위를 저장할 배열
 
 // 가사 랜덤하게 섞기
@@ -37,6 +20,9 @@ function shuffle(array) {
 function startRound() {
     if (round === 128) {
         currentLyrics = shuffle([...lyrics]);  // 128개의 가사를 랜덤으로 섞음
+    } else if (round === 2) {
+        currentLyrics = shuffle([...selectedLyrics]);  // 결승에 진출한 두 개의 가사를 표시
+        selectedLyrics = [];
     } else {
         currentLyrics = shuffle([...selectedLyrics]);  // 이전 라운드에서 선택된 가사들을 섞음
         selectedLyrics = [];  // 선택된 가사 목록 초기화
@@ -98,14 +84,16 @@ function checkNextRound() {
             startThirdPlaceMatch();  // 3, 4위 결정전 시작
             return;
         } else if (round === '3rdPlace') {
-            finalResults.push(thirdPlaceContest[0]);  // 3등
-            finalResults.push(thirdPlaceContest[1]);  // 4등
+            // 3, 4위 결정전에서 결과 저장
+            finalResults[2] = thirdPlaceContest[0];  // 3등
+            finalResults[3] = thirdPlaceContest[1];  // 4등
             round = 2;  // 결승전 진행
             startRound();  // 결승전 시작
             return;
         } else if (round === 2) {
-            finalResults.unshift(selectedLyrics[0]);  // 1등
-            finalResults.unshift(selectedLyrics[1]);  // 2등
+            // 결승에서 1, 2등 결과 저장
+            finalResults[0] = selectedLyrics[0];  // 1등
+            finalResults[1] = selectedLyrics[1];  // 2등
             showFinalResults();  // 최종 결과 표시
             return;  // 결승이 끝나면 더 이상 라운드를 진행하지 않음
         }
