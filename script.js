@@ -41,30 +41,22 @@ function startRound() {
         selectedLyrics = [];  // 선택된 가사 목록 초기화
     }
 
-    if (currentLyrics.length === 1) {
-        finalResults.push(currentLyrics[0]);  // 최종 1등
-        showFinalResults();
-    } else if (currentLyrics.length === 2) {
-        // 결승전: 1등과 2등 결정
-        document.getElementById('round-info').innerText = '결승';
-        updateLyrics();
-    } else if (currentLyrics.length === 4) {
-        // 4강: 3등과 4등도 결정
-        document.getElementById('round-info').innerText = '4강';
-        updateLyrics();
-    } else {
-        // 나머지 라운드 진행
-        document.getElementById('round-info').innerText = `${round}강 진행 중`;
-        updateLyrics();
-    }
+    // 다음 라운드 정보 업데이트
+    document.getElementById('round-info').innerText = `${round}강 진행 중`;
+
+    // 가사 업데이트
+    updateLyrics();
 }
 
 // 가사 업데이트
 function updateLyrics() {
     if (currentLyrics.length >= 2) {
-        console.log('현재 비교 중인 가사:', currentLyrics[0], 'vs', currentLyrics[1]);  // 로그 추가
+        // 현재 비교할 두 개의 가사 표시
         document.getElementById('lyric1').innerText = currentLyrics[0];
         document.getElementById('lyric2').innerText = currentLyrics[1];
+    } else {
+        // 더 이상 비교할 가사가 없으면 다음 라운드로 이동
+        checkNextRound();
     }
 }
 
@@ -80,14 +72,20 @@ document.getElementById('lyric2').addEventListener('click', function() {
 // 가사 선택 처리
 function selectLyric(selected) {
     selectedLyrics.push(selected);  // 선택된 가사 저장
-    console.log('선택된 가사:', selected);  // 로그 추가
     currentLyrics.splice(0, 2);  // 선택한 두 가사를 배열에서 제거
-    console.log('남은 currentLyrics:', currentLyrics);  // 로그 추가
+    console.log('선택된 가사:', selected);  // 로그로 선택된 가사 확인
+    console.log('남은 가사:', currentLyrics);  // 로그로 남은 가사 확인
 
-    // 다음 라운드로 넘어갈지 체크
+    // 다음 가사 쌍을 업데이트
+    updateLyrics();
+}
+
+// 라운드가 끝났는지 확인하고, 다음 라운드로 이동
+function checkNextRound() {
     if (currentLyrics.length === 0) {
+        // 현재 라운드가 끝나면 다음 라운드로 이동
         if (round === 128) {
-            round = 64;  // 64강으로 이동
+            round = 64;
         } else if (round === 64) {
             round = 32;
         } else if (round === 32) {
@@ -97,18 +95,15 @@ function selectLyric(selected) {
         } else if (round === 8) {
             round = 4;
         } else if (round === 4) {
-            // 3, 4등 결정
             finalResults.push(selectedLyrics[1]);  // 3등
             finalResults.push(selectedLyrics[0]);  // 4등
             round = 2;  // 결승
         } else if (round === 2) {
-            // 결승에서 1, 2등 결정
             finalResults.push(selectedLyrics[0]);  // 2등
         }
-        console.log('라운드 완료, 다음 라운드로 이동:', round);  // 로그 추가
-        startRound();  // 다음 라운드로 이동
-    } else {
-        updateLyrics();  // 현재 라운드 내에서 다음 가사 업데이트
+
+        // 새로운 라운드 시작
+        startRound();
     }
 }
 
