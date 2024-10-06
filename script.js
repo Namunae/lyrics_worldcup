@@ -57,21 +57,29 @@ function startRound() {
 // 가사 업데이트 (다음 두 개의 가사를 보여줌)
 function updateLyrics() {
     if (currentLyrics.length >= 2) {
+        // 기존의 이벤트 리스너 제거 (중복 방지)
+        document.getElementById('lyric1').removeEventListener('click', handleClick1);
+        document.getElementById('lyric2').removeEventListener('click', handleClick2);
+
         document.getElementById('lyric1').innerText = currentLyrics[0];
         document.getElementById('lyric2').innerText = currentLyrics[1];
+
+        // 새로운 이벤트 리스너 추가
+        document.getElementById('lyric1').addEventListener('click', handleClick1);
+        document.getElementById('lyric2').addEventListener('click', handleClick2);
     } else {
         checkNextRound();  // 남은 가사가 없으면 라운드 종료 처리
     }
 }
 
-// 가사 선택 시 동작
-document.getElementById('lyric1').addEventListener('click', function () {
+// 가사 선택 시 동작 (중복 방지를 위해 따로 함수로 분리)
+function handleClick1() {
     selectLyric(0);
-});
+}
 
-document.getElementById('lyric2').addEventListener('click', function () {
+function handleClick2() {
     selectLyric(1);
-});
+}
 
 // 가사 선택 처리
 function selectLyric(choice) {
