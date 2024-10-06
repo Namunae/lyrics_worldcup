@@ -48,13 +48,8 @@ function updateLyrics() {
     if (currentLyrics.length >= 2) {
         document.getElementById('lyric1').removeEventListener('click', handleClick1);
         document.getElementById('lyric2').removeEventListener('click', handleClick2);
-        document.getElementById('lyric1').removeEventListener('touchend', handleClick1);
-        document.getElementById('lyric2').removeEventListener('touchend', handleClick2);
-
-        document.getElementById('lyric1').innerText = currentLyrics[0];
-        document.getElementById('lyric2').innerText = currentLyrics[1];
-
-        // 모바일과 데스크탑을 구분하여 이벤트 등록
+        
+        // 모바일인지 확인 후, 각각에 맞는 이벤트만 추가
         if (isMobile) {
             document.getElementById('lyric1').addEventListener('touchend', handleClick1);
             document.getElementById('lyric2').addEventListener('touchend', handleClick2);
@@ -62,6 +57,9 @@ function updateLyrics() {
             document.getElementById('lyric1').addEventListener('click', handleClick1);
             document.getElementById('lyric2').addEventListener('click', handleClick2);
         }
+
+        document.getElementById('lyric1').innerText = currentLyrics[0];
+        document.getElementById('lyric2').innerText = currentLyrics[1];
     } else {
         checkNextRound();  // 남은 가사가 없으면 라운드 종료 처리
     }
