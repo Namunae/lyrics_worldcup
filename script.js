@@ -79,7 +79,10 @@ function checkNextRound() {
             finalResults.push(selectedLyrics[0]);  // 4등
             round = 2;  // 결승
         } else if (round === 2) {
-            finalResults.push(selectedLyrics[0]);  // 2등
+            finalResults.push(selectedLyrics[0]);  // 1등
+            finalResults.push(selectedLyrics[1]);  // 2등
+            showFinalResults();  // 결승이 끝난 후 최종 결과 표시
+            return;  // 결승이 끝나면 더 이상 라운드를 진행하지 않음
         }
 
         startRound();  // 새로운 라운드 시작
