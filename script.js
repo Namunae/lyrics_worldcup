@@ -58,16 +58,16 @@ function updateLyrics() {
 
 // 가사 선택 시 동작
 document.getElementById('lyric1').addEventListener('click', function() {
-    selectLyric(currentLyrics[0]);
+    selectLyric(0);
 });
 
 document.getElementById('lyric2').addEventListener('click', function() {
-    selectLyric(currentLyrics[1]);
+    selectLyric(1);
 });
 
 // 가사 선택 처리
-function selectLyric(selected) {
-    selectedLyrics.push(selected);
+function selectLyric(choice) {
+    selectedLyrics.push(currentLyrics[choice]);  // 선택된 가사만 저장
     currentLyrics.splice(0, 2);  // 선택한 두 가사를 배열에서 제거
 
     if (currentLyrics.length >= 2) {
@@ -91,7 +91,6 @@ function checkNextRound() {
         } else if (round === 8) {
             round = 4;
         } else if (round === 4) {
-            // 4강에서 떨어진 2개의 가사만 thirdPlaceContest에 저장
             thirdPlaceContest = [...selectedLyrics.slice(2)];  // 결승에 진출하지 못한 가사 저장
             selectedLyrics = [...selectedLyrics.slice(0, 2)];  // 결승에 진출한 가사만 남김
             round = '3rdPlace';  // 3,4위 결정전 진행
