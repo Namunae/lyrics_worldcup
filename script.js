@@ -19,11 +19,11 @@ const lyrics = [
 ];
 
 let round = 128;  // 현재 라운드 (128강 시작)
-let currentLyrics = [];
-let selectedLyrics = [];
+let currentLyrics = [];  // 현재 라운드의 가사 목록
+let selectedLyrics = [];  // 선택된 가사 목록
 let finalResults = [];  // 최종 결과 저장
 
-// 가사 랜덤하게 섞기
+// 가사를 랜덤하게 섞는 함수
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -38,7 +38,7 @@ function startRound() {
         currentLyrics = shuffle([...lyrics]);  // 128개의 가사를 랜덤으로 섞음
     } else {
         currentLyrics = shuffle([...selectedLyrics]);  // 이전 라운드에서 선택된 가사들을 섞음
-        selectedLyrics = [];
+        selectedLyrics = [];  // 선택된 가사 목록 초기화
     }
 
     if (currentLyrics.length === 1) {
@@ -61,8 +61,10 @@ function startRound() {
 
 // 가사 업데이트
 function updateLyrics() {
-    document.getElementById('lyric1').innerText = currentLyrics[0];
-    document.getElementById('lyric2').innerText = currentLyrics[1];
+    if (currentLyrics.length >= 2) {
+        document.getElementById('lyric1').innerText = currentLyrics[0];
+        document.getElementById('lyric2').innerText = currentLyrics[1];
+    }
 }
 
 // 가사 선택 시 동작
@@ -76,9 +78,10 @@ document.getElementById('lyric2').addEventListener('click', function() {
 
 // 가사 선택 처리
 function selectLyric(selected) {
-    selectedLyrics.push(selected);
+    selectedLyrics.push(selected);  // 선택된 가사 저장
     currentLyrics.splice(0, 2);  // 선택한 두 가사를 배열에서 제거
 
+    // 다음 라운드로 넘어갈지 체크
     if (currentLyrics.length === 0) {
         if (round === 128) {
             round = 64;  // 64강으로 이동
@@ -101,14 +104,13 @@ function selectLyric(selected) {
         }
         startRound();  // 다음 라운드로 이동
     } else {
-        update
-        updateLyrics();
+        updateLyrics();  // 현재 라운드 내에서 다음 가사 업데이트
     }
 }
 
 // 최종 결과 표시
 function showFinalResults() {
-    document.getElementById('lyrics-pair').style.display = 'none';
+    document.getElementById('lyrics-pair').style.display = 'none';  // 가사 선택 버튼 숨김
     document.getElementById('round-info').innerText = '최종 결과';
     document.getElementById('winner-announcement').innerHTML = `
         1등: ${finalResults[0]}<br>
