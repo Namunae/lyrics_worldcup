@@ -19,11 +19,11 @@ const lyrics = [
 ];
 
 let round = 128;  // 현재 라운드 (128강 시작)
-let currentLyrics = [];  // 현재 라운드의 가사 목록
-let selectedLyrics = [];  // 선택된 가사 목록
+let currentLyrics = [];
+let selectedLyrics = [];
 let finalResults = [];  // 최종 결과 저장
 
-// 가사를 랜덤하게 섞는 함수
+// 가사 랜덤하게 섞기
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -62,6 +62,7 @@ function startRound() {
 // 가사 업데이트
 function updateLyrics() {
     if (currentLyrics.length >= 2) {
+        console.log('현재 비교 중인 가사:', currentLyrics[0], 'vs', currentLyrics[1]);  // 로그 추가
         document.getElementById('lyric1').innerText = currentLyrics[0];
         document.getElementById('lyric2').innerText = currentLyrics[1];
     }
@@ -79,7 +80,9 @@ document.getElementById('lyric2').addEventListener('click', function() {
 // 가사 선택 처리
 function selectLyric(selected) {
     selectedLyrics.push(selected);  // 선택된 가사 저장
+    console.log('선택된 가사:', selected);  // 로그 추가
     currentLyrics.splice(0, 2);  // 선택한 두 가사를 배열에서 제거
+    console.log('남은 currentLyrics:', currentLyrics);  // 로그 추가
 
     // 다음 라운드로 넘어갈지 체크
     if (currentLyrics.length === 0) {
@@ -102,6 +105,7 @@ function selectLyric(selected) {
             // 결승에서 1, 2등 결정
             finalResults.push(selectedLyrics[0]);  // 2등
         }
+        console.log('라운드 완료, 다음 라운드로 이동:', round);  // 로그 추가
         startRound();  // 다음 라운드로 이동
     } else {
         updateLyrics();  // 현재 라운드 내에서 다음 가사 업데이트
