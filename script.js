@@ -39,6 +39,8 @@ function startRound() {
         currentLyrics = shuffle([...lyrics]);  // 128개의 가사를 랜덤으로 섞음
     } else if (round === 2) {
         currentLyrics = [...selectedLyrics];  // 결승전 가사 표시
+    } else if (round === '3rdPlace') {
+        currentLyrics = [...thirdPlaceContest];  // 3-4위전 가사 표시
     } else {
         currentLyrics = shuffle([...selectedLyrics]);  // 이전 라운드에서 선택된 가사들을 섞음
         selectedLyrics = [];  // 선택된 가사 목록 초기화
@@ -69,8 +71,11 @@ document.getElementById('lyric2').addEventListener('click', function () {
 
 // 가사 선택 처리
 function selectLyric(choice) {
+    if (round === 4) {
+        // 4강에서 떨어진 두 가사를 thirdPlaceContest에 저장
+        thirdPlaceContest.push(currentLyrics[1 - choice]);  
+    }
     selectedLyrics.push(currentLyrics[choice]);  // 선택된 가사만 저장
-    thirdPlaceContest.push(currentLyrics[1 - choice]);  // 떨어진 가사를 3-4위전용 배열에 추가
     currentLyrics.splice(0, 2);  // 선택한 두 가사를 배열에서 제거
 
     if (currentLyrics.length >= 2) {
