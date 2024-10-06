@@ -23,6 +23,7 @@ let currentLyrics = [];
 let selectedLyrics = [];
 let thirdPlaceContest = [];  // 3, 4위 결정전에서 사용할 배열
 let finalResults = [];  // 최종 순위를 저장할 배열
+let finalContest = [];  // 결승전에서 사용할 배열 (1, 2위 결정)
 let semiFinalists = [];  // 4강에 진출한 가사를 저장할 배열
 
 // 가사 랜덤하게 섞기
@@ -39,11 +40,11 @@ function startRound() {
     if (round === 128) {
         currentLyrics = shuffle([...lyrics]);  // 128개의 가사를 랜덤으로 섞음
     } else if (round === 2) {
-        currentLyrics = [...selectedLyrics];  // 결승전 가사 표시
+        currentLyrics = [...finalContest];  // 결승전 가사 표시
     } else if (round === '3rdPlace') {
         currentLyrics = [...thirdPlaceContest];  // 3-4위전 가사 표시
     } else if (round === 4) {
-        currentLyrics = shuffle([...semiFinalists]);  // 4강에 진출한 가사 표시
+        currentLyrics = [...semiFinalists];  // 4강에 진출한 가사 표시
     } else {
         currentLyrics = shuffle([...selectedLyrics]);  // 이전 라운드에서 선택된 가사들을 섞음
         selectedLyrics = [];  // 선택된 가사 목록 초기화
@@ -75,10 +76,8 @@ document.getElementById('lyric2').addEventListener('click', function () {
 // 가사 선택 처리
 function selectLyric(choice) {
     if (round === 4) {
-        // 4강에서 선택되지 않은 가사만 thirdPlaceContest에 저장
-        if (selectedLyrics.length < 2) {
-            selectedLyrics.push(currentLyrics[choice]);  // 결승 진출자 저장
-        }
+        // 4강에서 승자는 결승전으로, 패자는 3-4위전으로 보냄
+        finalContest.push(currentLyrics[choice]);  // 결승 진출자 저장
         thirdPlaceContest.push(currentLyrics[1 - choice]);  // 3-4위 전용 배열에 저장
     } else {
         selectedLyrics.push(currentLyrics[choice]);  // 선택된 가사 저장
@@ -121,8 +120,8 @@ function checkNextRound() {
             return;
         } else if (round === 2) {
             // 결승에서 1, 2등 결과 저장
-            finalResults[0] = selectedLyrics[0];  // 1등
-            finalResults[1] = selectedLyrics[1];  // 2등
+            finalResults[0] = finalContest[0];  // 1등
+            finalResults[1] = finalContest[1];  // 2등
             showFinalResults();  // 최종 결과 표시
             return;  // 결승이 끝나면 더 이상 라운드를 진행하지 않음
         }
