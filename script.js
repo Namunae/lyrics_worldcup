@@ -98,7 +98,7 @@ function checkNextRound() {
             startThirdPlaceMatch();  // 3, 4위 결정전 시작
             return;
         } else if (round === '3rdPlace') {
-            finalResults.push(selectedLyrics[0]);  // 3등
+            finalResults.push(thirdPlaceContest[0]);  // 3등
             finalResults.push(thirdPlaceContest[1]);  // 4등
             round = 2;  // 결승전 진행
             startRound();  // 결승전 시작
