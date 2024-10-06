@@ -93,7 +93,8 @@ function checkNextRound() {
         } else if (round === 8) {
             round = 4;
         } else if (round === 4) {
-            thirdPlaceContest = [...selectedLyrics];  // 3,4위 결정전 후보 저장
+            // 4강에서 떨어진 2개의 가사만 thirdPlaceContest에 저장
+            thirdPlaceContest = selectedLyrics.slice(2);  // 마지막 2개만 저장 (결승에 진출하지 못한 가사들)
             round = '3rdPlace';  // 3,4위 결정전 진행
             startThirdPlaceMatch();  // 3,4위 결정전 시작
             return;
