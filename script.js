@@ -21,7 +21,7 @@ const lyrics = [
 let round = 128;  // 현재 라운드 (128강 시작)
 let currentLyrics = [];
 let selectedLyrics = [];
-let thirdPlaceContest = [];  // 3,4위 결정전에서 사용할 배열
+let thirdPlaceContest = [];  // 3, 4위 결정전에서 사용할 배열
 let finalResults = [];  // 최종 순위를 저장할 배열
 
 // 가사 랜덤하게 섞기
@@ -38,8 +38,7 @@ function startRound() {
     if (round === 128) {
         currentLyrics = shuffle([...lyrics]);  // 128개의 가사를 랜덤으로 섞음
     } else if (round === 2) {
-        currentLyrics = shuffle([...selectedLyrics]);  // 결승에 진출한 두 개의 가사를 표시
-        selectedLyrics = [];
+        currentLyrics = [...selectedLyrics];  // 결승전 가사 표시
     } else {
         currentLyrics = shuffle([...selectedLyrics]);  // 이전 라운드에서 선택된 가사들을 섞음
         selectedLyrics = [];  // 선택된 가사 목록 초기화
@@ -60,11 +59,11 @@ function updateLyrics() {
 }
 
 // 가사 선택 시 동작
-document.getElementById('lyric1').addEventListener('click', function() {
+document.getElementById('lyric1').addEventListener('click', function () {
     selectLyric(0);
 });
 
-document.getElementById('lyric2').addEventListener('click', function() {
+document.getElementById('lyric2').addEventListener('click', function () {
     selectLyric(1);
 });
 
@@ -94,16 +93,16 @@ function checkNextRound() {
         } else if (round === 8) {
             round = 4;
         } else if (round === 4) {
-            // 4강에서 결승 진출자와 3, 4위 결정전으로 나눔
-            thirdPlaceContest = selectedLyrics.slice(2);  // 결승에 진출하지 못한 가사 저장 (3, 4위)
-            selectedLyrics = selectedLyrics.slice(0, 2);  // 결승에 진출한 가사만 남김
-            round = '3rdPlace';  // 3, 4위 결정전 진행
+            // 4강에서 결승과 3, 4위 결정전으로 나누기
+            thirdPlaceContest = selectedLyrics.slice(2);  // 결승에 진출하지 못한 두 가사
+            selectedLyrics = selectedLyrics.slice(0, 2);  // 결승에 진출한 두 가사
+            round = '3rdPlace';  // 3, 4위 결정전
             startThirdPlaceMatch();  // 3, 4위 결정전 시작
             return;
         } else if (round === '3rdPlace') {
             // 3, 4위 결정전에서 결과 저장
-            finalResults[2] = selectedLyrics[0];  // 3등
-            finalResults[3] = selectedLyrics[1];  // 4등
+            finalResults[2] = thirdPlaceContest[0];  // 3등
+            finalResults[3] = thirdPlaceContest[1];  // 4등
             round = 2;  // 결승전 진행
             startRound();  // 결승전 시작
             return;
