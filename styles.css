@@ -34,11 +34,11 @@ body {
     border: 2px solid #ddd;
     border-radius: 5px;
     background-color: #eee;
-    width: 100%;
-    max-width: 350px;
-    word-wrap: break-word;
-    text-align: center;
-    white-space: pre-wrap;
+    width: 100%; /* 버튼 너비를 100%로 설정 */
+    max-width: 350px; /* 최대 너비 설정 */
+    word-wrap: break-word; /* 긴 가사 줄바꿈 */
+    text-align: center; /* 텍스트를 중앙 정렬 */
+    white-space: pre-wrap; /* 줄바꿈 문자 (\n) 적용 */
 }
 
 .play-btn {
@@ -49,6 +49,7 @@ body {
     border: 1px solid #ddd;
     background-color: #eee;
     border-radius: 5px;
+    text-align: center; /* 재생 버튼도 중앙 정렬 */
 }
 
 .play-btn:hover {
