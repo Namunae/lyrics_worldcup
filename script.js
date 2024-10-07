@@ -274,7 +274,6 @@ function showFinalResults() {
     `;
 }
 
-// 오디오 재생 함수: 하나만 재생하고 나머지는 중지
 function playAudio(audioId) {
     const audio1 = document.getElementById('audio1');
     const audio2 = document.getElementById('audio2');
@@ -287,8 +286,11 @@ function playAudio(audioId) {
     // 선택한 오디오만 재생
     if (currentAudio.paused) {
         currentAudio.play();
+    } else {
+        currentAudio.pause();
     }
 }
+
 
 // 게임 시작
 startRound();
