@@ -137,6 +137,7 @@ let finalResults = [];
 let finalContest = [];
 let semiFinalists = [];
 
+// 배열을 무작위로 섞는 함수
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -145,6 +146,7 @@ function shuffle(array) {
     return array;
 }
 
+// 라운드를 시작하는 함수
 function startRound() {
     if (round === 128) {
         currentLyrics = shuffle([...lyrics]);
@@ -163,6 +165,7 @@ function startRound() {
     updateLyrics();
 }
 
+// 가사와 오디오 업데이트 함수
 function updateLyrics() {
     if (currentLyrics.length >= 2) {
         document.getElementById('lyric1').removeEventListener('click', handleClick1);
@@ -187,6 +190,7 @@ function updateLyrics() {
     }
 }
 
+// 가사 선택을 처리하는 클릭 이벤트 핸들러
 function handleClick1() {
     selectLyric(0);
 }
@@ -195,6 +199,7 @@ function handleClick2() {
     selectLyric(1);
 }
 
+// 가사 선택 및 라운드 진행 처리
 function selectLyric(choice) {
     if (round === 4) {
         finalContest.push(currentLyrics[choice]);
@@ -218,6 +223,7 @@ function selectLyric(choice) {
     }
 }
 
+// 다음 라운드로 넘어가는 함수
 function checkNextRound() {
     if (currentLyrics.length === 0) {
         if (round === 128) {
@@ -248,6 +254,7 @@ function checkNextRound() {
     }
 }
 
+// 3, 4위 결정전을 시작하는 함수
 function startThirdPlaceMatch() {
     currentLyrics = [...thirdPlaceContest];
     selectedLyrics = [];
@@ -255,6 +262,7 @@ function startThirdPlaceMatch() {
     updateLyrics();
 }
 
+// 최종 결과를 표시하는 함수
 function showFinalResults() {
     document.getElementById('lyrics-pair').style.display = 'none';
     document.getElementById('round-info').innerText = '최종 결과';
@@ -266,6 +274,7 @@ function showFinalResults() {
     `;
 }
 
+// 오디오 재생 함수: 하나만 재생하고 나머지는 중지
 function playAudio(audioId, audioSource) {
     const audioElement = document.getElementById(audioId);
 
@@ -287,7 +296,6 @@ function playAudio(audioId, audioSource) {
         audioElement.pause();
     }
 }
-
 
 // 게임 시작
 startRound();
