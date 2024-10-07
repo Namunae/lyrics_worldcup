@@ -20,23 +20,23 @@ body {
 
 #lyrics-pair {
     display: flex;
-    flex-direction: column; /* 가사와 VS를 세로로 배치 */
-    justify-content: center; /* 세로 중앙 정렬 */
-    align-items: center; /* 가로 중앙 정렬 */
+    flex-direction: column; /* 세로로 가사와 VS를 배치 */
+    justify-content: center; /* 중앙 정렬 */
+    align-items: center;
     margin-top: 20px;
 }
 
 .lyric-btn {
     padding: 15px 20px;
-    margin: 10px 0; /* 버튼 간격을 세로로 설정 */
+    margin: 10px 0; /* 세로 간격 추가 */
     font-size: 1.2rem;
     cursor: pointer;
     border: 2px solid #ddd;
     border-radius: 5px;
     background-color: #eee;
-    width: 100%; /* 버튼을 100% 너비로 설정 */
+    width: 100%; /* 버튼 너비를 100%로 설정 */
     max-width: 350px; /* 최대 너비 설정 */
-    word-wrap: break-word; /* 긴 가사는 줄바꿈 처리 */
+    word-wrap: break-word; /* 긴 가사 줄바꿈 */
     text-align: center; /* 텍스트 중앙 정렬 */
 }
 
@@ -45,10 +45,10 @@ body {
 }
 
 #lyrics-pair span {
-    display: block; /* VS를 강제로 블록 요소로 배치 */
-    margin: 20px 0;
+    display: block; /* VS를 block으로 설정하여 줄바꿈 강제 */
+    margin: 20px 0; /* VS 위아래에 공간 추가 */
     font-weight: bold;
-    font-size: 1.5rem; /* VS 텍스트 크기 */
+    font-size: 1.5rem;
 }
 
 #round-info {
