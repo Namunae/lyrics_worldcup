@@ -274,21 +274,29 @@ function showFinalResults() {
     `;
 }
 
-// 오디오 재생 함수: 하나만 재생하고 나머지는 중지
 function playAudio(audioId) {
     const audio1 = document.getElementById('audio1');
     const audio2 = document.getElementById('audio2');
     const currentAudio = document.getElementById(audioId);
 
-    // 모든 오디오 중지
-    audio1.pause();
-    audio2.pause();
+    // 모든 오디오 중지 (다른 오디오가 재생 중일 경우 중지)
+    if (audio1 !== currentAudio) {
+        audio1.pause();
+        audio1.currentTime = 0;  // 재생 위치를 처음으로 돌림
+    }
+    if (audio2 !== currentAudio) {
+        audio2.pause();
+        audio2.currentTime = 0;  // 재생 위치를 처음으로 돌림
+    }
 
-    // 선택한 오디오만 재생
+    // 선택한 오디오 재생/중지
     if (currentAudio.paused) {
-        currentAudio.play();
+        currentAudio.play();  // 일시정지 상태라면 재생
+    } else {
+        currentAudio.pause();  // 재생 중이라면 일시정지
     }
 }
+
 
 // 게임 시작
 startRound();
