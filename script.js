@@ -165,8 +165,11 @@ function startRound() {
 
 function updateLyrics() {
     if (currentLyrics.length >= 2) {
-        document.getElementById('lyric1').removeEventListener('click', handleClick1);
-        document.getElementById('lyric2').removeEventListener('click', handleClick2);
+        // Remove existing event listeners to prevent duplicates
+        const playButton1 = document.getElementById('play1');
+        const playButton2 = document.getElementById('play2');
+        playButton1.removeEventListener('click', handlePlay1);
+        playButton2.removeEventListener('click', handlePlay2);
 
         const lyric1 = currentLyrics[0];
         const lyric2 = currentLyrics[1];
@@ -181,19 +184,14 @@ function updateLyrics() {
         audio1.querySelector('source').src = lyric1.audio;
         audio2.querySelector('source').src = lyric2.audio;
 
-        // 오디오가 새롭게 로드될 수 있도록 호출
-        audio1.load();  // 오디오 파일 새로 로드
-        audio2.load();  // 오디오 파일 새로 로드
+        // 오디오 로드
+        audio1.load();
+        audio2.load();
 
-        // 이전에 등록된 이벤트 리스너가 있을 경우 제거
-        document.getElementById('play1').removeEventListener('click', () => playAudio('audio1'));
-        document.getElementById('play2').removeEventListener('click', () => playAudio('audio2'));
+        // 새로운 이벤트 리스너 추가
+        playButton1.addEventListener('click', () => handlePlayAudio('audio1'));
+        playButton2.addEventListener('click', () => handlePlayAudio('audio2'));
 
-        // 새로운 버튼 클릭 이벤트 설정
-        document.getElementById('play1').addEventListener('click', () => playAudio('audio1'));
-        document.getElementById('play2').addEventListener('click', () => playAudio('audio2'));
-
-        // 가사 클릭 이벤트 설정
         document.getElementById('lyric1').addEventListener('click', handleClick1);
         document.getElementById('lyric2').addEventListener('click', handleClick2);
     } else {
@@ -201,6 +199,20 @@ function updateLyrics() {
     }
 }
 
+function handlePlayAudio(audioId) {
+    const audio1 = document.getElementById('audio1');
+    const audio2 = document.getElementById('audio2');
+    const currentAudio = document.getElementById(audioId);
+
+    // 모든 오디오 중지
+    audio1.pause();
+    audio2.pause();
+
+    // 현재 클릭한 오디오 재생
+    if (currentAudio.paused) {
+        currentAudio.play();
+    }
+}
 
 function handleClick1() {
     selectLyric(0);
@@ -280,45 +292,6 @@ function showFinalResults() {
         4등: ${finalResults[3].text}
     `;
 }
-
-function playAudio(audioId) {
-    const audio1 = document.getElementById('audio1');
-    const audio2 = document.getElementById('audio2');
-    const currentAudio = document.getElementById(audioId);
-
-    // 현재 재생 중인 오디오 외 모든 오디오 멈추기
-    if (audioId === 'audio1' && !audio2.paused) {
-        audio2.pause();
-        audio2.currentTime = 0;  // 재생 위치를 처음으로 돌림
-    } 
-    else if (audioId === 'audio2' && !audio1.paused) {
-        audio1.pause();
-        audio1.currentTime = 0;
-    }
-
-    // 선택한 오디오 재생/중지
-    if (currentAudio.paused) {
-        currentAudio.play();  // 일시정지 상태라면 재생
-    } else {
-        currentAudio.pause();  // 재생 중이라면 일시정지
-    }
-}
-
-// 이벤트 리스너 중복을 방지하는 함수
-function setPlayListeners() {
-    // 기존 이벤트 리스너 제거
-    document.getElementById('play1').removeEventListener('click', () => playAudio('audio1'));
-    document.getElementById('play2').removeEventListener('click', () => playAudio('audio2'));
-
-    // 새로운 이벤트 리스너 추가
-    document.getElementById('play1').addEventListener('click', () => playAudio('audio1'));
-    document.getElementById('play2').addEventListener('click', () => playAudio('audio2'));
-}
-
-// 호출하여 리스너 초기화
-setPlayListeners();
-
-
 
 // 게임 시작
 startRound();
