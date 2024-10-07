@@ -128,7 +128,6 @@ const lyrics = [
     { text: "우린 서로의 아픔을 보네\n그만큼 가깝다는거야", audio: "song127.mp3" },
     { text: "우린 여전히 아름다워 지난 일일 순 없어", audio: "song128.mp3" }
 ];
-
 let round = 128;  // 현재 라운드 (128강 시작)
 let currentLyrics = [];
 let selectedLyrics = [];
@@ -168,8 +167,11 @@ function startRound() {
 // 가사와 오디오 업데이트 함수
 function updateLyrics() {
     if (currentLyrics.length >= 2) {
+        // 기존 이벤트 리스너 제거
         document.getElementById('lyric1').removeEventListener('click', handleClick1);
         document.getElementById('lyric2').removeEventListener('click', handleClick2);
+        document.getElementById('play1').removeEventListener('click', handlePlay1);
+        document.getElementById('play2').removeEventListener('click', handlePlay2);
 
         const lyric1 = currentLyrics[0];
         const lyric2 = currentLyrics[1];
@@ -178,9 +180,9 @@ function updateLyrics() {
         document.getElementById('lyric1').innerText = lyric1.text;
         document.getElementById('lyric2').innerText = lyric2.text;
 
-        // 오디오 파일을 사용자가 클릭할 때만 로드
-        document.getElementById('play1').addEventListener('click', () => playAudio('audio1', lyric1.audio));
-        document.getElementById('play2').addEventListener('click', () => playAudio('audio2', lyric2.audio));
+        // 오디오 재생 버튼을 사용자가 클릭할 때만 로드
+        document.getElementById('play1').addEventListener('click', handlePlay1);
+        document.getElementById('play2').addEventListener('click', handlePlay2);
 
         // 가사 선택 클릭 이벤트 설정
         document.getElementById('lyric1').addEventListener('click', handleClick1);
@@ -188,6 +190,15 @@ function updateLyrics() {
     } else {
         checkNextRound();
     }
+}
+
+// 오디오 재생 이벤트 처리 함수
+function handlePlay1() {
+    playAudio('audio1', currentLyrics[0].audio);
+}
+
+function handlePlay2() {
+    playAudio('audio2', currentLyrics[1].audio);
 }
 
 // 가사 선택을 처리하는 클릭 이벤트 핸들러
