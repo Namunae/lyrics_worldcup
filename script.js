@@ -171,8 +171,8 @@ function updateLyrics() {
         // 기존 이벤트 리스너 제거
         const playButton1 = document.getElementById('play1');
         const playButton2 = document.getElementById('play2');
-        playButton1.removeEventListener('click', handlePlay1);
-        playButton2.removeEventListener('click', handlePlay2);
+        playButton1.removeEventListener('click', handlePlayAudio1);
+        playButton2.removeEventListener('click', handlePlayAudio2);
 
         const lyric1 = currentLyrics[0];
         const lyric2 = currentLyrics[1];
@@ -184,16 +184,16 @@ function updateLyrics() {
         // 오디오 소스 업데이트 및 로드
         const audio1 = document.getElementById('audio1');
         const audio2 = document.getElementById('audio2');
+        
+        // 오디오를 로드하기 전에 source 태그를 업데이트
         audio1.querySelector('source').src = lyric1.audio;
         audio2.querySelector('source').src = lyric2.audio;
+        
+        // 오디오 요소 초기화 후 다시 로드
         audio1.load();
         audio2.load();
 
-        // 버튼 클릭 이벤트 설정 (중복 방지 위해 이벤트 추가 전에 삭제)
-        playButton1.removeEventListener('click', () => handlePlayAudio('audio1'));
-        playButton2.removeEventListener('click', () => handlePlayAudio('audio2'));
-
-        // 버튼 클릭 이벤트 다시 추가
+        // 버튼 클릭 이벤트 설정
         playButton1.addEventListener('click', () => handlePlayAudio('audio1'));
         playButton2.addEventListener('click', () => handlePlayAudio('audio2'));
 
@@ -208,13 +208,13 @@ function updateLyrics() {
 function handlePlayAudio(audioId) {
     const currentAudio = document.getElementById(audioId);
 
-    // 기존에 재생 중이던 오디오가 있다면 멈춤
+    // 모든 오디오 중지
     if (currentlyPlayingAudio && currentlyPlayingAudio !== currentAudio) {
         currentlyPlayingAudio.pause();
         currentlyPlayingAudio.currentTime = 0;  // 오디오 처음으로 되돌림
     }
 
-    // 클릭한 오디오 재생/정지 처리
+    // 선택한 오디오만 재생/정지 처리
     if (currentAudio.paused) {
         currentAudio.play();
         currentlyPlayingAudio = currentAudio;
