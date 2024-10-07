@@ -16,6 +16,13 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+#lyrics-pair {
+    display: flex;
+    flex-direction: column;  /* 버튼과 VS를 세로로 배치 */
+    align-items: center;      /* 가운데 정렬 */
+    margin-top: 20px;
+}
+
 .lyric-btn {
     padding: 15px 20px;
     margin: 10px;
@@ -28,6 +35,12 @@ body {
 
 .lyric-btn:hover {
     background-color: #ddd;
+}
+
+#lyrics-pair span {
+    margin: 10px 0;
+    font-weight: bold;
+    font-size: 1.2rem;
 }
 
 #round-info {
