@@ -175,25 +175,32 @@ function updateLyrics() {
         document.getElementById('lyric1').innerText = lyric1.text;
         document.getElementById('lyric2').innerText = lyric2.text;
 
-        // 오디오 파일 로드
+        // 오디오 업데이트 및 로드
         const audio1 = document.getElementById('audio1');
         const audio2 = document.getElementById('audio2');
         audio1.querySelector('source').src = lyric1.audio;
         audio2.querySelector('source').src = lyric2.audio;
-        audio1.load();
-        audio2.load();
 
-        // 재생 버튼 클릭 이벤트 설정
+        // 오디오가 새롭게 로드될 수 있도록 호출
+        audio1.load();  // 오디오 파일 새로 로드
+        audio2.load();  // 오디오 파일 새로 로드
+
+        // 이전에 등록된 이벤트 리스너가 있을 경우 제거
+        document.getElementById('play1').removeEventListener('click', () => playAudio('audio1'));
+        document.getElementById('play2').removeEventListener('click', () => playAudio('audio2'));
+
+        // 새로운 버튼 클릭 이벤트 설정
         document.getElementById('play1').addEventListener('click', () => playAudio('audio1'));
         document.getElementById('play2').addEventListener('click', () => playAudio('audio2'));
 
-        // 가사 선택 클릭 이벤트 설정
+        // 가사 클릭 이벤트 설정
         document.getElementById('lyric1').addEventListener('click', handleClick1);
         document.getElementById('lyric2').addEventListener('click', handleClick2);
     } else {
         checkNextRound();
     }
 }
+
 
 function handleClick1() {
     selectLyric(0);
