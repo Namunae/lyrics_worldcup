@@ -137,6 +137,9 @@ let finalResults = [];
 let finalContest = [];
 let semiFinalists = [];
 
+// 오디오 컨트롤 관련 변수
+let currentlyPlayingAudio = null;
+
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -165,7 +168,7 @@ function startRound() {
 
 function updateLyrics() {
     if (currentLyrics.length >= 2) {
-        // Remove existing event listeners to prevent duplicates
+        // 기존 이벤트 리스너 제거
         const playButton1 = document.getElementById('play1');
         const playButton2 = document.getElementById('play2');
         playButton1.removeEventListener('click', handlePlay1);
@@ -178,17 +181,15 @@ function updateLyrics() {
         document.getElementById('lyric1').innerText = lyric1.text;
         document.getElementById('lyric2').innerText = lyric2.text;
 
-        // 오디오 업데이트 및 로드
+        // 오디오 소스 업데이트 및 로드
         const audio1 = document.getElementById('audio1');
         const audio2 = document.getElementById('audio2');
         audio1.querySelector('source').src = lyric1.audio;
         audio2.querySelector('source').src = lyric2.audio;
-
-        // 오디오 로드
         audio1.load();
         audio2.load();
 
-        // 새로운 이벤트 리스너 추가
+        // 이벤트 리스너 다시 추가
         playButton1.addEventListener('click', () => handlePlayAudio('audio1'));
         playButton2.addEventListener('click', () => handlePlayAudio('audio2'));
 
@@ -200,17 +201,21 @@ function updateLyrics() {
 }
 
 function handlePlayAudio(audioId) {
-    const audio1 = document.getElementById('audio1');
-    const audio2 = document.getElementById('audio2');
     const currentAudio = document.getElementById(audioId);
 
-    // 모든 오디오 중지
-    audio1.pause();
-    audio2.pause();
+    // 기존에 재생 중이던 오디오가 있다면 멈춤
+    if (currentlyPlayingAudio && currentlyPlayingAudio !== currentAudio) {
+        currentlyPlayingAudio.pause();
+        currentlyPlayingAudio.currentTime = 0;  // 오디오 처음으로 되돌림
+    }
 
-    // 현재 클릭한 오디오 재생
+    // 클릭한 오디오 재생/정지 처리
     if (currentAudio.paused) {
         currentAudio.play();
+        currentlyPlayingAudio = currentAudio;
+    } else {
+        currentAudio.pause();
+        currentlyPlayingAudio = null;
     }
 }
 
