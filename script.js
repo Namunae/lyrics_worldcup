@@ -213,11 +213,7 @@ function handleClick2() {
 // 가사 선택 및 라운드 진행 처리
 // 가사 선택 및 라운드 진행 처리
 function selectLyric(choice) {
-    // 모든 오디오 중지
-    document.getElementById('audio1').pause();
-    document.getElementById('audio2').pause();
-    document.getElementById('audio1').currentTime = 0; // 오디오 재생 위치를 처음으로
-    document.getElementById('audio2').currentTime = 0; // 오디오 재생 위치를 처음으로
+    stopAllAudio(); // 모든 오디오를 멈춤
 
     if (round === 4) {
         finalContest.push(currentLyrics[choice]);
@@ -240,6 +236,7 @@ function selectLyric(choice) {
         checkNextRound();
     }
 }
+
 
 // 다음 라운드로 넘어가는 함수
 function checkNextRound() {
@@ -292,8 +289,19 @@ function showFinalResults() {
     `;
 }
 
+// 모든 오디오를 중지하고 재생 위치를 초기화하는 함수
+function stopAllAudio() {
+    const audioElements = document.querySelectorAll('audio');
+    audioElements.forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0; // 재생 위치 초기화
+    });
+}
+
 // 오디오 재생 함수: 하나만 재생하고 나머지는 중지
 function playAudio(audioId, audioSource) {
+    stopAllAudio(); // 다른 오디오를 멈춤
+
     const audioElement = document.getElementById(audioId);
 
     // 오디오 소스 설정
@@ -303,10 +311,6 @@ function playAudio(audioId, audioSource) {
         audioElement.load(); // 오디오를 새로 로드
     }
 
-    // 다른 오디오 중지
-    document.getElementById('audio1').pause();
-    document.getElementById('audio2').pause();
-
     // 선택한 오디오만 재생/중지
     if (audioElement.paused) {
         audioElement.play();
@@ -314,6 +318,7 @@ function playAudio(audioId, audioSource) {
         audioElement.pause();
     }
 }
+
 
 // 게임 시작
 startRound();
