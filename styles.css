@@ -9,9 +9,6 @@ body {
 }
 
 .container {
-    display: flex; /* flex 속성을 추가 */
-    flex-direction: column; /* 세로 정렬 */
-    align-items: center; /* 중앙으로 정렬 */
     text-align: center;
     background-color: white;
     padding: 20px;
@@ -19,7 +16,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
-    margin: 0 auto;
+    margin: 0 auto; /* 이 부분이 중앙 정렬을 보장합니다 */
 }
 
 #lyrics-pair {
@@ -27,8 +24,8 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%; /* 부모 너비에 맞춤 */
     margin-top: 20px;
+    width: 100%; /* 부모 너비에 맞춤 */
 }
 
 .lyric-btn {
@@ -39,9 +36,8 @@ body {
     border: 2px solid #ddd;
     border-radius: 5px;
     background-color: #eee;
-    width: 100%; /* 부모 너비에 맞추기 */
+    width: 100%; /* 부모 너비에 맞춤 */
     max-width: 350px; /* 최대 너비 설정 */
-    word-wrap: break-word;
     text-align: center;
     white-space: pre-wrap; /* 줄바꿈 */
     box-sizing: border-box; /* padding이 전체 너비에 포함되도록 */
@@ -55,14 +51,10 @@ body {
     border: 1px solid #ddd;
     background-color: #eee;
     border-radius: 5px;
-    width: 100%; /* 버튼도 부모 너비에 맞추기 */
+    width: 100%; /* 버튼도 부모 너비에 맞춤 */
     max-width: 350px;
     text-align: center;
     box-sizing: border-box; /* padding이 전체 너비에 포함되도록 */
-}
-
-.play-btn:hover {
-    background-color: #ccc;
 }
 
 #lyrics-pair span {
