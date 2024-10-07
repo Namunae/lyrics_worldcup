@@ -279,21 +279,14 @@ function playAudio(audioId) {
     const audio2 = document.getElementById('audio2');
     const currentAudio = document.getElementById(audioId);
 
-    // 클릭한 버튼이 audio1을 재생할 때
-    if (audioId === 'audio1') {
-        // audio2가 재생 중이면 멈춤
-        if (!audio2.paused) {
-            audio2.pause();
-            audio2.currentTime = 0;  // audio2의 재생 위치를 처음으로 돌림
-        }
+    // 현재 재생 중인 오디오 외 모든 오디오 멈추기
+    if (audioId === 'audio1' && !audio2.paused) {
+        audio2.pause();
+        audio2.currentTime = 0;  // 재생 위치를 처음으로 돌림
     } 
-    // 클릭한 버튼이 audio2를 재생할 때
-    else if (audioId === 'audio2') {
-        // audio1이 재생 중이면 멈춤
-        if (!audio1.paused) {
-            audio1.pause();
-            audio1.currentTime = 0;  // audio1의 재생 위치를 처음으로 돌림
-        }
+    else if (audioId === 'audio2' && !audio1.paused) {
+        audio1.pause();
+        audio1.currentTime = 0;
     }
 
     // 선택한 오디오 재생/중지
@@ -303,6 +296,20 @@ function playAudio(audioId) {
         currentAudio.pause();  // 재생 중이라면 일시정지
     }
 }
+
+// 이벤트 리스너 중복을 방지하는 함수
+function setPlayListeners() {
+    // 기존 이벤트 리스너 제거
+    document.getElementById('play1').removeEventListener('click', () => playAudio('audio1'));
+    document.getElementById('play2').removeEventListener('click', () => playAudio('audio2'));
+
+    // 새로운 이벤트 리스너 추가
+    document.getElementById('play1').addEventListener('click', () => playAudio('audio1'));
+    document.getElementById('play2').addEventListener('click', () => playAudio('audio2'));
+}
+
+// 호출하여 리스너 초기화
+setPlayListeners();
 
 
 
