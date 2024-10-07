@@ -38,7 +38,7 @@ body {
     max-width: 350px; /* 최대 너비 설정 */
     word-wrap: break-word; /* 긴 가사 줄바꿈 */
     text-align: center; /* 텍스트 중앙 정렬 */
-    white-space: pre-wrap; /* 줄바꿈 문자 (\n) 적용 */
+    white-space: normal; /* 줄바꿈 처리 */
 }
 
 .lyric-btn:hover {
