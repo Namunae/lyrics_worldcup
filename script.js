@@ -189,10 +189,15 @@ function updateLyrics() {
         audio1.load();
         audio2.load();
 
-        // 이벤트 리스너 다시 추가
+        // 버튼 클릭 이벤트 설정 (중복 방지 위해 이벤트 추가 전에 삭제)
+        playButton1.removeEventListener('click', () => handlePlayAudio('audio1'));
+        playButton2.removeEventListener('click', () => handlePlayAudio('audio2'));
+
+        // 버튼 클릭 이벤트 다시 추가
         playButton1.addEventListener('click', () => handlePlayAudio('audio1'));
         playButton2.addEventListener('click', () => handlePlayAudio('audio2'));
 
+        // 가사 클릭 이벤트 설정
         document.getElementById('lyric1').addEventListener('click', handleClick1);
         document.getElementById('lyric2').addEventListener('click', handleClick2);
     } else {
