@@ -61,7 +61,7 @@ function updateLyrics() {
         document.getElementById('lyric1').removeEventListener('click', handleClick1);
         document.getElementById('lyric2').removeEventListener('click', handleClick2);
 
-        // \n을 <br>로 변경하여 HTML에서 줄바꿈 처리
+        // 가사 출력 시 \n을 <br>로 변환하여 줄바꿈 처리
         document.getElementById('lyric1').innerHTML = currentLyrics[0].replace(/\n/g, '<br>');
         document.getElementById('lyric2').innerHTML = currentLyrics[1].replace(/\n/g, '<br>');
 
@@ -130,7 +130,7 @@ function checkNextRound() {
             return;
         } else if (round === 2) {
             showFinalResults();  // 최종 결과 표시
-            return;  // 결승이 끝나면 더 이상 라운드를 진행하지 않음
+            return;
         }
 
         startRound();  // 새로운 라운드 시작
