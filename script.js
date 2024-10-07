@@ -211,7 +211,14 @@ function handleClick2() {
 }
 
 // 가사 선택 및 라운드 진행 처리
+// 가사 선택 및 라운드 진행 처리
 function selectLyric(choice) {
+    // 모든 오디오 중지
+    document.getElementById('audio1').pause();
+    document.getElementById('audio2').pause();
+    document.getElementById('audio1').currentTime = 0; // 오디오 재생 위치를 처음으로
+    document.getElementById('audio2').currentTime = 0; // 오디오 재생 위치를 처음으로
+
     if (round === 4) {
         finalContest.push(currentLyrics[choice]);
         thirdPlaceContest.push(currentLyrics[1 - choice]);
