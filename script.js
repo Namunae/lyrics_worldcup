@@ -279,14 +279,21 @@ function playAudio(audioId) {
     const audio2 = document.getElementById('audio2');
     const currentAudio = document.getElementById(audioId);
 
-    // 모든 오디오 중지 (다른 오디오가 재생 중일 경우 중지)
-    if (audio1 !== currentAudio) {
-        audio1.pause();
-        audio1.currentTime = 0;  // 재생 위치를 처음으로 돌림
-    }
-    if (audio2 !== currentAudio) {
-        audio2.pause();
-        audio2.currentTime = 0;  // 재생 위치를 처음으로 돌림
+    // 클릭한 버튼이 audio1을 재생할 때
+    if (audioId === 'audio1') {
+        // audio2가 재생 중이면 멈춤
+        if (!audio2.paused) {
+            audio2.pause();
+            audio2.currentTime = 0;  // audio2의 재생 위치를 처음으로 돌림
+        }
+    } 
+    // 클릭한 버튼이 audio2를 재생할 때
+    else if (audioId === 'audio2') {
+        // audio1이 재생 중이면 멈춤
+        if (!audio1.paused) {
+            audio1.pause();
+            audio1.currentTime = 0;  // audio1의 재생 위치를 처음으로 돌림
+        }
     }
 
     // 선택한 오디오 재생/중지
@@ -296,6 +303,7 @@ function playAudio(audioId) {
         currentAudio.pause();  // 재생 중이라면 일시정지
     }
 }
+
 
 
 // 게임 시작
