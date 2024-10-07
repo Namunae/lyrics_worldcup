@@ -129,7 +129,6 @@ const lyrics = [
     { text: "우린 여전히 아름다워 지난 일일 순 없어", audio: "song128.mp3" }
 ];
 
-
 let round = 128;  // 현재 라운드 (128강 시작)
 let currentLyrics = [];
 let selectedLyrics = [];
@@ -176,26 +175,25 @@ function updateLyrics() {
         document.getElementById('lyric1').innerText = lyric1.text;
         document.getElementById('lyric2').innerText = lyric2.text;
 
-        // 오디오 업데이트 및 로드
+        // 오디오 파일 로드
         const audio1 = document.getElementById('audio1');
         const audio2 = document.getElementById('audio2');
         audio1.querySelector('source').src = lyric1.audio;
         audio2.querySelector('source').src = lyric2.audio;
-        audio1.load();  // 새 오디오 파일 로드
-        audio2.load();  // 새 오디오 파일 로드
+        audio1.load();
+        audio2.load();
 
-        // 버튼 클릭 이벤트 설정
+        // 재생 버튼 클릭 이벤트 설정
         document.getElementById('play1').addEventListener('click', () => playAudio('audio1'));
         document.getElementById('play2').addEventListener('click', () => playAudio('audio2'));
 
-        // 가사 클릭 이벤트 설정
+        // 가사 선택 클릭 이벤트 설정
         document.getElementById('lyric1').addEventListener('click', handleClick1);
         document.getElementById('lyric2').addEventListener('click', handleClick2);
     } else {
         checkNextRound();
     }
 }
-
 
 function handleClick1() {
     selectLyric(0);
@@ -276,12 +274,19 @@ function showFinalResults() {
     `;
 }
 
+// 오디오 재생 함수: 하나만 재생하고 나머지는 중지
 function playAudio(audioId) {
-    const audio = document.getElementById(audioId);
-    if (audio.paused) {
-        audio.play();
-    } else {
-        audio.pause();
+    const audio1 = document.getElementById('audio1');
+    const audio2 = document.getElementById('audio2');
+    const currentAudio = document.getElementById(audioId);
+
+    // 모든 오디오 중지
+    audio1.pause();
+    audio2.pause();
+
+    // 선택한 오디오만 재생
+    if (currentAudio.paused) {
+        currentAudio.play();
     }
 }
 
