@@ -129,12 +129,6 @@ const lyrics = [
     { text: "우린 여전히 아름다워 지난 일일 순 없어", audio: "song128.mp3" }
 ];
 
-const lyrics = [
-    { text: "다 주어도 행복하단 건\n지금 너를 사랑하나봐", audio: "song1.mp3" },
-    { text: "사랑할게 하늘도 우릴 지켜줄 테니까", audio: "song2.mp3" },
-    // ... (이하 생략, 다른 가사와 노래 파일들도 동일하게 추가)
-];
-
 let round = 128;  // 현재 라운드 (128강 시작)
 let currentLyrics = [];
 let selectedLyrics = [];
