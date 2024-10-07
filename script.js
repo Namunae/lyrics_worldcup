@@ -175,17 +175,9 @@ function updateLyrics() {
         document.getElementById('lyric1').innerText = lyric1.text;
         document.getElementById('lyric2').innerText = lyric2.text;
 
-        // 오디오 파일 로드
-        const audio1 = document.getElementById('audio1');
-        const audio2 = document.getElementById('audio2');
-        audio1.querySelector('source').src = lyric1.audio;
-        audio2.querySelector('source').src = lyric2.audio;
-        audio1.load();
-        audio2.load();
-
-        // 재생 버튼 클릭 이벤트 설정
-        document.getElementById('play1').addEventListener('click', () => playAudio('audio1'));
-        document.getElementById('play2').addEventListener('click', () => playAudio('audio2'));
+        // 오디오 파일을 사용자가 클릭할 때만 로드
+        document.getElementById('play1').addEventListener('click', () => playAudio('audio1', lyric1.audio));
+        document.getElementById('play2').addEventListener('click', () => playAudio('audio2', lyric2.audio));
 
         // 가사 선택 클릭 이벤트 설정
         document.getElementById('lyric1').addEventListener('click', handleClick1);
@@ -274,20 +266,25 @@ function showFinalResults() {
     `;
 }
 
-function playAudio(audioId) {
-    const audio1 = document.getElementById('audio1');
-    const audio2 = document.getElementById('audio2');
-    const currentAudio = document.getElementById(audioId);
+function playAudio(audioId, audioSource) {
+    const audioElement = document.getElementById(audioId);
 
-    // 모든 오디오 중지
-    audio1.pause();
-    audio2.pause();
+    // 오디오 소스 설정
+    const sourceElement = audioElement.querySelector('source');
+    if (sourceElement.src !== audioSource) {
+        sourceElement.src = audioSource;
+        audioElement.load(); // 오디오를 새로 로드
+    }
 
-    // 선택한 오디오만 재생
-    if (currentAudio.paused) {
-        currentAudio.play();
+    // 다른 오디오 중지
+    document.getElementById('audio1').pause();
+    document.getElementById('audio2').pause();
+
+    // 선택한 오디오만 재생/중지
+    if (audioElement.paused) {
+        audioElement.play();
     } else {
-        currentAudio.pause();
+        audioElement.pause();
     }
 }
 
