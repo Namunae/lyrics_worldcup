@@ -15,27 +15,28 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px; /* 컨테이너의 최대 너비 설정 */
+    max-width: 400px;
 }
 
 #lyrics-pair {
     display: flex;
-    flex-direction: column;  /* 가사와 VS를 세로로 배치 */
-    align-items: center;
+    flex-direction: column; /* 가사와 VS를 세로로 배치 */
+    justify-content: center; /* 세로 중앙 정렬 */
+    align-items: center; /* 가로 중앙 정렬 */
     margin-top: 20px;
 }
 
 .lyric-btn {
     padding: 15px 20px;
-    margin: 10px 0; /* 세로 간격 설정 */
+    margin: 10px 0; /* 버튼 간격을 세로로 설정 */
     font-size: 1.2rem;
     cursor: pointer;
     border: 2px solid #ddd;
     border-radius: 5px;
     background-color: #eee;
-    width: 100%; /* 버튼이 전체 너비를 차지하도록 설정 */
+    width: 100%; /* 버튼을 100% 너비로 설정 */
     max-width: 350px; /* 최대 너비 설정 */
-    word-wrap: break-word; /* 가사가 길 경우 줄바꿈 처리 */
+    word-wrap: break-word; /* 긴 가사는 줄바꿈 처리 */
     text-align: center; /* 텍스트 중앙 정렬 */
 }
 
@@ -44,9 +45,10 @@ body {
 }
 
 #lyrics-pair span {
-    margin: 20px 0;  /* VS 텍스트 상하 간격 설정 */
+    display: block; /* VS를 강제로 블록 요소로 배치 */
+    margin: 20px 0;
     font-weight: bold;
-    font-size: 1.5rem;  /* VS 텍스트 크기 조정 */
+    font-size: 1.5rem; /* VS 텍스트 크기 */
 }
 
 #round-info {
