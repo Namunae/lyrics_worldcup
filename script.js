@@ -33,7 +33,7 @@ const lyrics = [
     { text: "이제는 다시 울지 좀 말고 똑바로 봐\n네 앞에 있는 날", audio: "song32.mp3" },
     { text: "내가 너에게 가 너를 지킬게", audio: "song33.mp3" },
     { text: "웃게 해줄게 네가 있어야\n숨 쉴 수 있어 난 그래", audio: "song34.mp3" },
-    { text: "이제는 다시 울지 좀 말고\n똑봐로 봐 네 앞에 있는 날", audio: "song35.mp3" },
+    { text: "내가 너에게 가\n내가 너 서 있는 곳에", audio: "song35.mp3" },
     { text: "너라는 불빛만 찾는 나인걸", audio: "song36.mp3" },
     { text: "너로 인해 모든 날들이 아름다워", audio: "song37.mp3" },
     { text: "거부할 시간이 없어\n나에게 모든걸 열어줘", audio: "song38.mp3" },
