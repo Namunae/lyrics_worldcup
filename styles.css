@@ -20,34 +20,44 @@ body {
 
 #lyrics-pair {
     display: flex;
-    flex-direction: column; /* 세로로 가사와 VS를 배치 */
-    justify-content: center; /* 중앙 정렬 */
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     margin-top: 20px;
 }
 
 .lyric-btn {
     padding: 15px 20px;
-    margin: 10px 0; /* 세로 간격 추가 */
+    margin: 10px 0;
     font-size: 1.2rem;
     cursor: pointer;
     border: 2px solid #ddd;
     border-radius: 5px;
     background-color: #eee;
-    width: 100%; /* 버튼 너비를 100%로 설정 */
-    max-width: 350px; /* 최대 너비 설정 */
-    word-wrap: break-word; /* 긴 가사 줄바꿈 */
-    text-align: center; /* 텍스트 중앙 정렬 */
-    white-space: normal; /* 줄바꿈 처리 */
+    width: 100%;
+    max-width: 350px;
+    word-wrap: break-word;
+    text-align: center;
+    white-space: pre-wrap;
 }
 
-.lyric-btn:hover {
-    background-color: #ddd;
+.play-btn {
+    padding: 10px 20px;
+    margin: 10px 0;
+    font-size: 1rem;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    background-color: #eee;
+    border-radius: 5px;
+}
+
+.play-btn:hover {
+    background-color: #ccc;
 }
 
 #lyrics-pair span {
-    display: block; /* VS를 block으로 설정하여 줄바꿈 강제 */
-    margin: 20px 0; /* VS 위아래에 공간 추가 */
+    display: block;
+    margin: 20px 0;
     font-weight: bold;
     font-size: 1.5rem;
 }
